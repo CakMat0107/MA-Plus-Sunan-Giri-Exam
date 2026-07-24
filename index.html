@@ -4,547 +4,132 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Dashboard Asesmen - MA Plus Sunan Giri</title>
-    
-    <!-- Font & FontAwesome Icons -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --primary: #10b981;
-            --primary-dark: #059669;
-            --primary-light: #6ee7b7;
-            --accent: #f59e0b;
-            
-            /* Dark Theme (Default) */
-            --bg-body: #0b0f17;
-            --bg-card: rgba(23, 32, 48, 0.7);
-            --bg-card-hover: rgba(30, 41, 59, 0.8);
-            --border-color: rgba(255, 255, 255, 0.08);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --glow: rgba(16, 185, 129, 0.15);
-            --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-            --iframe-bg: #1e293b;
+            --primary: #10b981; --primary-dark: #059669; --primary-light: #6ee7b7; --accent: #f59e0b;
+            --bg-body: #0b0f17; --bg-card: rgba(23, 32, 48, 0.7); --bg-card-hover: rgba(30, 41, 59, 0.8);
+            --border-color: rgba(255, 255, 255, 0.08); --text-main: #f8fafc; --text-muted: #94a3b8;
+            --glow: rgba(16, 185, 129, 0.15); --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); --iframe-bg: #1e293b;
         }
-
         [data-theme="light"] {
-            /* Light Theme */
-            --bg-body: #f1f5f9;
-            --bg-card: rgba(255, 255, 255, 0.85);
-            --bg-card-hover: rgba(255, 255, 255, 0.95);
-            --border-color: rgba(0, 0, 0, 0.08);
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --glow: rgba(16, 185, 129, 0.1);
-            --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
-            --iframe-bg: #ffffff;
+            --bg-body: #f1f5f9; --bg-card: rgba(255, 255, 255, 0.85); --bg-card-hover: rgba(255, 255, 255, 0.95);
+            --border-color: rgba(0, 0, 0, 0.08); --text-main: #0f172a; --text-muted: #64748b;
+            --glow: rgba(16, 185, 129, 0.1); --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05); --iframe-bg: #ffffff;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            -webkit-user-select: none;
-            user-select: none;
-        }
-
-        body {
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            min-height: 100vh;
-            overflow-x: hidden;
-            transition: background-color 0.4s ease, color 0.4s ease;
-        }
-
-        /* Ambient Glow Background */
-        .bg-glow-1 {
-            position: fixed;
-            top: -100px;
-            left: -100px;
-            width: 350px;
-            height: 350px;
-            background: radial-gradient(circle, var(--primary) 0%, rgba(0,0,0,0) 70%);
-            opacity: 0.25;
-            filter: blur(60px);
-            z-index: 0;
-            animation: pulseGlow 8s infinite alternate;
-        }
-
-        @keyframes pulseGlow {
-            0% { transform: scale(1) translate(0, 0); opacity: 0.2; }
-            100% { transform: scale(1.3) translate(30px, -30px); opacity: 0.35; }
-        }
-
-        /* Container Layout */
-        .app-container {
-            position: relative;
-            z-index: 1;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px 16px 40px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        /* Header / Navbar */
-        header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            padding: 16px 20px;
-            border-radius: 20px;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow);
-            animation: slideDown 0.6s ease;
-        }
-
-        .brand-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .brand-logo {
-            width: 44px;
-            height: 44px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            box-shadow: 0 4px 12px var(--glow);
-        }
-
-        .brand-text h1 {
-            font-size: 1.1rem;
-            font-weight: 800;
-            background: linear-gradient(90deg, var(--text-main), var(--primary-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .brand-text p {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        .header-controls {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* Theme Toggle Switch */
-        .theme-toggle-btn {
-            background: var(--bg-card-hover);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-        }
-
-        .theme-toggle-btn:active {
-            transform: scale(0.9) rotate(15deg);
-        }
-
-        /* Welcome Banner */
-        .welcome-banner {
-            background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            border-radius: 24px;
-            padding: 24px;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow);
-            animation: fadeInUp 0.7s ease 0.1s backwards;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .welcome-banner::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), #3b82f6, var(--accent));
-        }
-
-        .banner-title {
-            font-size: 1.3rem;
-            font-weight: 800;
-            margin-bottom: 8px;
-        }
-
-        .banner-desc {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.5;
-            margin-bottom: 16px;
-        }
-
-        .meta-info {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-
-        .meta-card {
-            background: var(--bg-card-hover);
-            padding: 12px 14px;
-            border-radius: 14px;
-            border: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .meta-card i {
-            color: var(--primary);
-            font-size: 1.1rem;
-        }
-
-        .meta-card-text span {
-            display: block;
-            font-size: 0.7rem;
-            color: var(--text-muted);
-        }
-
-        .meta-card-text strong {
-            font-size: 0.85rem;
-            font-weight: 700;
-        }
-
-        /* Exam Card Grid */
-        .section-title {
-            font-size: 1rem;
-            font-weight: 700;
-            margin: 8px 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .exam-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 14px;
-            animation: fadeInUp 0.7s ease 0.2s backwards;
-        }
-
-        .exam-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(12px);
-            border-radius: 20px;
-            padding: 18px;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 140px;
-        }
-
-        .exam-card:hover, .exam-card:active {
-            transform: translateY(-4px) scale(1.02);
-            border-color: var(--primary);
-            box-shadow: 0 12px 24px -6px var(--glow);
-        }
-
-        .exam-card-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            background: var(--glow);
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            margin-bottom: 12px;
-        }
-
-        .exam-card-title {
-            font-size: 0.95rem;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .exam-card-sub {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        .exam-card-btn {
-            margin-top: 14px;
-            padding: 8px 12px;
-            background: var(--primary);
-            color: white;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        /* Fullscreen Google Form Container */
-        .exam-viewport {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: var(--bg-body);
-            z-index: 999;
-            flex-direction: column;
-            animation: fadeIn 0.4s ease;
-        }
-
-        .exam-viewport.active {
-            display: flex;
-        }
-
-        .exam-viewport-header {
-            background: var(--bg-card);
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .close-exam-btn {
-            background: #ef4444;
-            color: white;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .iframe-wrapper {
-            flex: 1;
-            width: 100%;
-            height: 100%;
-            position: relative;
-            background: var(--iframe-bg);
-        }
-
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .iframe-loading {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-
-        .spinner {
-            width: 36px;
-            height: 36px;
-            border: 3px solid var(--border-color);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; user-select: none; }
+        body { background-color: var(--bg-body); color: var(--text-main); min-height: 100vh; overflow-x: hidden; transition: 0.4s ease; }
+        .bg-glow-1 { position: fixed; top: -100px; left: -100px; width: 350px; height: 350px; background: radial-gradient(circle, var(--primary) 0%, rgba(0,0,0,0) 70%); opacity: 0.25; filter: blur(60px); z-index: 0; animation: pulseGlow 8s infinite alternate; }
+        @keyframes pulseGlow { 0% { transform: scale(1) translate(0, 0); opacity: 0.2; } 100% { transform: scale(1.3) translate(30px, -30px); opacity: 0.35; } }
+        .app-container { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; padding: 20px 16px 40px; display: flex; flex-direction: column; gap: 20px; }
+        header { display: flex; align-items: center; justify-content: space-between; background: var(--bg-card); backdrop-filter: blur(12px); padding: 16px 20px; border-radius: 20px; border: 1px solid var(--border-color); box-shadow: var(--shadow); }
+        .brand-info { display: flex; align-items: center; gap: 12px; }
+        .brand-logo { width: 44px; height: 44px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; box-shadow: 0 4px 12px var(--glow); }
+        .brand-text h1 { font-size: 1.1rem; font-weight: 800; background: linear-gradient(90deg, var(--text-main), var(--primary-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .brand-text p { font-size: 0.75rem; color: var(--text-muted); }
+        .theme-toggle-btn { background: var(--bg-card-hover); border: 1px solid var(--border-color); color: var(--text-main); width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.1rem; transition: all 0.3s ease; }
+        .welcome-banner { background: var(--bg-card); backdrop-filter: blur(12px); border-radius: 24px; padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow); position: relative; overflow: hidden; }
+        .welcome-banner::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, var(--primary), #3b82f6, var(--accent)); }
+        .banner-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 8px; }
+        .banner-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px; }
+        .meta-info { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .meta-card { background: var(--bg-card-hover); padding: 12px 14px; border-radius: 14px; border: 1px solid var(--border-color); display: flex; align-items: center; gap: 10px; }
+        .meta-card i { color: var(--primary); font-size: 1.1rem; }
+        .meta-card-text span { display: block; font-size: 0.7rem; color: var(--text-muted); }
+        .meta-card-text strong { font-size: 0.85rem; font-weight: 700; }
+        .section-title { font-size: 1rem; font-weight: 700; margin: 8px 0; display: flex; align-items: center; gap: 8px; }
+        .exam-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+        .exam-card { background: var(--bg-card); backdrop-filter: blur(12px); border-radius: 20px; padding: 18px; border: 1px solid var(--border-color); box-shadow: var(--shadow); cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; }
+        .exam-card:hover { transform: translateY(-4px) scale(1.02); border-color: var(--primary); box-shadow: 0 12px 24px -6px var(--glow); }
+        .exam-card-icon { width: 40px; height: 40px; border-radius: 12px; background: var(--glow); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 12px; }
+        .exam-card-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+        .exam-card-sub { font-size: 0.75rem; color: var(--text-muted); }
+        .exam-card-btn { margin-top: 14px; padding: 8px 12px; background: var(--primary); color: white; border-radius: 10px; font-weight: 600; font-size: 0.8rem; display: flex; align-items: center; justify-content: space-between; }
+        .exam-viewport { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--bg-body); z-index: 999; flex-direction: column; }
+        .exam-viewport.active { display: flex; }
+        .exam-viewport-header { background: var(--bg-card); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); }
+        .close-exam-btn { background: #ef4444; color: white; border: none; padding: 6px 14px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+        .iframe-wrapper { flex: 1; width: 100%; height: 100%; position: relative; background: var(--iframe-bg); }
+        iframe { width: 100%; height: 100%; border: none; }
+        .iframe-loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 12px; color: var(--text-muted); font-size: 0.85rem; }
+        .spinner { width: 36px; height: 36px; border: 3px solid var(--border-color); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes slideDown { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        @keyframes fadeInUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
-
     <div class="bg-glow-1"></div>
-
     <div class="app-container">
-        
-        <!-- Header -->
         <header>
             <div class="brand-info">
-                <div class="brand-logo">
-                    <i class="fa-solid fa-graduation-cap"></i>
-                </div>
-                <div class="brand-text">
-                    <h1>MA Plus Sunan Giri</h1>
-                    <p>Portal Asesmen Digital</p>
-                </div>
+                <div class="brand-logo"><i class="fa-solid fa-graduation-cap"></i></div>
+                <div class="brand-text"><h1>MA Plus Sunan Giri</h1><p>Portal Asesmen Digital</p></div>
             </div>
             <div class="header-controls">
-                <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle Theme">
-                    <i class="fa-solid fa-moon" id="themeIcon"></i>
-                </button>
+                <button class="theme-toggle-btn" id="themeToggleBtn"><i class="fa-solid fa-moon" id="themeIcon"></i></button>
             </div>
         </header>
 
-        <!-- Welcome Banner -->
         <div class="welcome-banner">
             <div class="banner-title">Selamat Datang di Portal Ujian 👋</div>
-            <div class="banner-desc">
-                Pilih mata pelajaran yang diujikan hari ini. Kerjakan soal dengan jujur dan teliti.
-            </div>
+            <div class="banner-desc">Pilih mata pelajaran yang diujikan hari ini. Kerjakan soal dengan jujur dan teliti.</div>
             <div class="meta-info">
-                <div class="meta-card">
-                    <i class="fa-solid fa-shield-halved"></i>
-                    <div class="meta-card-text">
-                        <span>Sistem Keamanan</span>
-                        <strong>Exambro Secure</strong>
-                    </div>
-                </div>
-                <div class="meta-card">
-                    <i class="fa-solid fa-sun"></i>
-                    <div class="meta-card-text">
-                        <span>Pencahayaan Layar</span>
-                        <strong>Otomatis 90%</strong>
-                    </div>
-                </div>
+                <div class="meta-card"><i class="fa-solid fa-shield-halved"></i><div class="meta-card-text"><span>Sistem</span><strong>Exambro Secure</strong></div></div>
+                <div class="meta-card"><i class="fa-solid fa-sun"></i><div class="meta-card-text"><span>Layar</span><strong>Otomatis 90%</strong></div></div>
             </div>
         </div>
 
-        <!-- Exam Selection -->
-        <div class="section-title">
-            <i class="fa-solid fa-book-open" style="color: var(--primary);"></i>
-            <span>Daftar Asesmen</span>
-        </div>
+        <div class="section-title"><i class="fa-solid fa-book-open" style="color: var(--primary);"></i><span>Daftar Asesmen</span></div>
 
         <div class="exam-grid">
-            <!-- Card 1 (Ganti URL Google Form di bawah) -->
+            <!-- Ganti URL Google Form Anda di sini -->
             <div class="exam-card" onclick="openExam('https://docs.google.com/forms/d/e/PASTE_FORM_ID_1/viewform?embedded=true', 'Asesmen Utama')">
                 <div>
-                    <div class="exam-card-icon">
-                        <i class="fa-solid fa-file-pen"></i>
-                    </div>
-                    <div class="exam-card-title">Asesmen Utama</div>
-                    <div class="exam-card-sub">Soal Pilihan Ganda & Essay</div>
+                    <div class="exam-card-icon"><i class="fa-solid fa-file-pen"></i></div>
+                    <div class="exam-card-title">Asesmen Utama</div><div class="exam-card-sub">Soal Pilihan Ganda & Essay</div>
                 </div>
-                <div class="exam-card-btn">
-                    <span>Mulai Kerjakan</span>
-                    <i class="fa-solid fa-arrow-right"></i>
-                </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="exam-card" onclick="openExam('https://docs.google.com/forms/d/e/PASTE_FORM_ID_2/viewform?embedded=true', 'Ujian Cadangan')">
-                <div>
-                    <div class="exam-card-icon" style="color: var(--accent); background: rgba(245, 158, 11, 0.15);">
-                        <i class="fa-solid fa-clock-rotate-left"></i>
-                    </div>
-                    <div class="exam-card-title">Ujian Susulan / Cadangan</div>
-                    <div class="exam-card-sub">Khusus Sesi Tambahan</div>
-                </div>
-                <div class="exam-card-btn" style="background: var(--accent);">
-                    <span>Mulai Kerjakan</span>
-                    <i class="fa-solid fa-arrow-right"></i>
-                </div>
+                <div class="exam-card-btn"><span>Mulai Kerjakan</span><i class="fa-solid fa-arrow-right"></i></div>
             </div>
         </div>
-
     </div>
 
-    <!-- Fullscreen Google Form Container -->
     <div class="exam-viewport" id="examViewport">
         <div class="exam-viewport-header">
-            <div class="exam-viewport-title" id="examTitle" style="font-weight: 700;">Sesi Ujian Google Form</div>
-            <button class="close-exam-btn" onclick="closeExam()">
-                <i class="fa-solid fa-xmark"></i>
-                <span>Tutup Form</span>
-            </button>
+            <div class="exam-viewport-title" id="examTitle" style="font-weight: 700;">Ujian</div>
+            <button class="close-exam-btn" onclick="closeExam()"><i class="fa-solid fa-xmark"></i><span>Tutup Form</span></button>
         </div>
         <div class="iframe-wrapper">
-            <div class="iframe-loading" id="iframeLoader">
-                <div class="spinner"></div>
-                <span>Memuat Google Form...</span>
-            </div>
+            <div class="iframe-loading" id="iframeLoader"><div class="spinner"></div><span>Memuat Google Form...</span></div>
             <iframe id="examIframe" src="" onload="hideLoader()"></iframe>
         </div>
     </div>
 
     <script>
-        // --- 1. SETTING KECERAHAN LAYAR (90%) ---
-        function setBrightnessTo90() {
-            // Memanggil interface Android jika disetting di WebView
-            if (window.AndroidInterface && window.AndroidInterface.setBrightness) {
-                window.AndroidInterface.setBrightness(0.9);
-            }
-        }
-
-        // --- 2. THEMING (DARK / LIGHT TOGGLE) ---
         const themeToggleBtn = document.getElementById('themeToggleBtn');
         const themeIcon = document.getElementById('themeIcon');
         const htmlTag = document.documentElement;
-
+        
         const savedTheme = localStorage.getItem('theme') || 'dark';
         setTheme(savedTheme);
 
-        themeToggleBtn.addEventListener('click', () => {
-            const currentTheme = htmlTag.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            setTheme(newTheme);
-        });
-
+        themeToggleBtn.addEventListener('click', () => { setTheme(htmlTag.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); });
         function setTheme(theme) {
             htmlTag.setAttribute('data-theme', theme);
             localStorage.setItem('theme', theme);
             themeIcon.className = theme === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
         }
-
-        // --- 3. EXAM CONTROLLER ---
         function openExam(url, title) {
             document.getElementById('examTitle').innerText = title;
             document.getElementById('iframeLoader').style.display = 'flex';
             document.getElementById('examIframe').src = url;
             document.getElementById('examViewport').classList.add('active');
-            setBrightnessTo90();
         }
-
         function closeExam() {
             document.getElementById('examViewport').classList.remove('active');
             document.getElementById('examIframe').src = '';
         }
-
-        function hideLoader() {
-            document.getElementById('iframeLoader').style.display = 'none';
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            setBrightnessTo90();
-        });
+        function hideLoader() { document.getElementById('iframeLoader').style.display = 'none'; }
     </script>
 </body>
 </html>
