@@ -1,0 +1,15 @@
+<!-- Contoh tombol di file HTML Admin Anda -->
+<button onclick="simpanData('pass_login', document.getElementById('newPassLogin').value, 'Password Login')">
+    Simpan Password Login
+</button>
+
+<script>
+  function simpanData(key, value, label) {
+      // Memanggil fungsi jembatan AndroidBridge yang ada di WebView Android
+      if (window.AndroidBridge) {
+          window.AndroidBridge.updateSettingFromWeb(key, value, label);
+      } else {
+          alert("Bridge Android tidak ditemukan!");
+      }
+  }
+</script>
